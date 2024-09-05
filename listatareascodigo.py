@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QApplication, QWidget, QMessageBox, QVBoxLayout
 from PySide6.QtGui import QStandardItemModel, QStandardItem
-from ListaTareas import Ui_Form
+from listatareas import Ui_Form
 
 
 class Ventana(QWidget):
@@ -25,19 +25,19 @@ class Ventana(QWidget):
 class Tarea(Ventana):
     def __init__(self):
         super().__init__()
-        self.conectar_botones()
+        self.__conectar_botones()
 
         self.modelo_tareas = QStandardItemModel(self)
         self.modelo_tareas_completadas = QStandardItemModel(self)
         self.ui.tableTareaVacia.setModel(self.modelo_tareas)
         self.ui.tableTareaCompletada.setModel(self.modelo_tareas_completadas)
 
-    def conectar_botones(self):
-        self.ui.boton_agregar_tarea.clicked.connect(self.agregar_tarea)
-        self.ui.boton_eliminar_tarea.clicked.connect(self.eliminar_tarea)
-        self.ui.boton_completar_tarea.clicked.connect(self.completar_tarea)
+    def __conectar_botones(self):
+        self.ui.boton_agregar_tarea.clicked.connect(self.__agregar_tarea)
+        self.ui.boton_eliminar_tarea.clicked.connect(self.__eliminar_tarea)
+        self.ui.boton_completar_tarea.clicked.connect(self.__completar_tarea)
 
-    def agregar_tarea(self):
+    def __agregar_tarea(self):
         ingreso_tarea = self.ui.ingreso_tarea.text()
         if ingreso_tarea:
             texto = QStandardItem(ingreso_tarea)
@@ -46,7 +46,7 @@ class Tarea(Ventana):
         else:
             QMessageBox.warning(self, "Error", "El campo de texto está vacío")
 
-    def completar_tarea(self):
+    def __completar_tarea(self):
         tarea_vacia = self.ui.tableTareaVacia.currentIndex()
         tarea_completada = self.ui.tableTareaCompletada.currentIndex()
 
@@ -59,7 +59,7 @@ class Tarea(Ventana):
         else:
             QMessageBox.warning(self, "Error", "Primero selecciona la tarea.")
 
-    def eliminar_tarea(self):
+    def __eliminar_tarea(self):
         tarea_vacia = self.ui.tableTareaVacia.currentIndex()
         tarea_completada = self.ui.tableTareaCompletada.currentIndex()
 
@@ -71,8 +71,7 @@ class Tarea(Ventana):
             QMessageBox.warning(self, "Error", "Primero selecciona la tarea.")
 
 
-if __name__ == "__main__":
-    app = QApplication([])
-    tarea = Tarea()
-    tarea.show()
-    app.exec()
+app = QApplication([])
+tarea = Tarea()
+tarea.show()
+app.exec()
