@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import QApplication, QWidget, QMessageBox, QVBoxLayout
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 from ListaTareas import Ui_Form
-
+#
 
 class Ventana(QWidget):
     def __init__(self):
