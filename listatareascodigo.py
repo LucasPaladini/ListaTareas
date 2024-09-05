@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import QApplication, QWidget, QMessageBox, QVBoxLayout
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 from ListaTareas import Ui_Form
-#
+
 
 class Ventana(QWidget):
     def __init__(self):
@@ -18,15 +18,8 @@ class Ventana(QWidget):
         self.ui.tableTareaCompletada.horizontalHeader().setVisible(False)
         self.ui.tableTareaCompletada.verticalHeader().setVisible(False)
 
-        self.header_tareas = self.ui.tableTareaVacia.horizontalHeader()
-        self.header_completadas = self.ui.tableTareaCompletada.horizontalHeader()
-        self.header_tareas.setStretchLastSection(True)
-        self.header_completadas.setStretchLastSection(True)
-
-        self.modelo_tareas = QStandardItemModel(self)
-        self.modelo_tareas_completadas = QStandardItemModel(self)
-        self.ui.tableTareaVacia.setModel(self.modelo_tareas)
-        self.ui.tableTareaCompletada.setModel(self.modelo_tareas_completadas)
+        self.ui.tableTareaVacia.horizontalHeader().setStretchLastSection(True)
+        self.ui.tableTareaCompletada.horizontalHeader().setStretchLastSection(True)
 
 
 class Tarea(Ventana):
@@ -34,16 +27,21 @@ class Tarea(Ventana):
         super().__init__()
         self.conectar_botones()
 
+        self.modelo_tareas = QStandardItemModel(self)
+        self.modelo_tareas_completadas = QStandardItemModel(self)
+        self.ui.tableTareaVacia.setModel(self.modelo_tareas)
+        self.ui.tableTareaCompletada.setModel(self.modelo_tareas_completadas)
+
     def conectar_botones(self):
         self.ui.boton_agregar_tarea.clicked.connect(self.agregar_tarea)
         self.ui.boton_eliminar_tarea.clicked.connect(self.eliminar_tarea)
         self.ui.boton_completar_tarea.clicked.connect(self.completar_tarea)
 
     def agregar_tarea(self):
-        texto = self.ui.ingreso_tarea.text()
-        if texto:
-            item = QStandardItem(texto)
-            self.modelo_tareas.appendRow(item)
+        ingreso_tarea = self.ui.ingreso_tarea.text()
+        if ingreso_tarea:
+            texto = QStandardItem(ingreso_tarea)
+            self.modelo_tareas.appendRow(texto)
             self.ui.ingreso_tarea.clear()
         else:
             QMessageBox.warning(self, "Error", "El campo de texto está vacío")
