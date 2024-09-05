@@ -33,7 +33,7 @@ class Tarea(Ventana):
     def __init__(self):
         super().__init__()
         self.conectar_botones()
-#
+
     def conectar_botones(self):
         self.ui.boton_agregar_tarea.clicked.connect(self.agregar_tarea)
         self.ui.boton_eliminar_tarea.clicked.connect(self.eliminar_tarea)
