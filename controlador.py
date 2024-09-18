@@ -1,44 +1,43 @@
 from PySide6 import QtCore
-
+from PySide6.QtGui import QStandardItem, QStandardItemModel
+from PySide6.QtWidgets import QMessageBox
 from ventana import Ventana
-# from tarea import tarea
 
-class conectar_botones:
-    def __init__(self):
-        self.__ventana = Ventana()
-        # self.__modelo = ventana.modelo_tareas
-
+class ConectarBotones:
+    def __init__(self, ventana):
+        self.__ventana = ventana
+        self.__modelo_tareas = self.__ventana.ui.modelo_tareas
+        self.__modelo_tareas_completadas = self.__ventana.ui.modelo_tareas_completadas
 
     def agregar_tarea(self):
-        __ingreso_tarea = self.ui.ingreso_tarea.text()
-        if __ingreso_tarea:
-            texto = QStandardItem(__ingreso_tarea)
-            self.modelo_tareas.appendRow(texto)
-            self.ui.ingreso_tarea.clear()
+        ingreso_tarea = self.__ventana.ui.ingreso_tarea.text()
+        if ingreso_tarea:
+            texto = QStandardItem(ingreso_tarea)
+            self.__modelo_tareas.appendRow(texto)
+            self.__ventana.ui.ingreso_tarea.clear()
         else:
-            QMessageBox.warning(self, "Error", "El campo de texto está vacío")
+            QMessageBox.warning(self.__ventana, "Error", "El campo de texto está vacío")
 
     def completar_tarea(self):
-        __tarea_vacia = self.ui.tableTareaVacia.currentIndex()
-        __tarea_completada = self.ui.tableTareaCompletada.currentIndex()
+        tarea_vacia = self.__ventana.ui.tableTareaVacia.currentIndex()
+        tarea_completada = self.__ventana.ui.tableTareaCompletada.currentIndex()
 
-        if __tarea_vacia.isValid():
-            texto_tarea = self.modelo_tareas.itemFromIndex(__tarea_vacia).text()
-            self.modelo_tareas_completadas.appendRow(QStandardItem(texto_tarea))
-            self.modelo_tareas.removeRow(__tarea_vacia.row())
-        elif __tarea_completada.isValid():
-            QMessageBox.warning(self, "Error", "La tarea ya está completada.")
+        if tarea_vacia.isValid():
+            texto_tarea = self.__modelo_tareas.itemFromIndex(tarea_vacia).text()
+            self.__modelo_tareas_completadas.appendRow(QStandardItem(texto_tarea))
+            self.__modelo_tareas.removeRow(tarea_vacia.row())
+        elif tarea_completada.isValid():
+            QMessageBox.warning(self.__ventana, "Error", "La tarea ya está completada.")
         else:
-            QMessageBox.warning(self, "Error", "Primero selecciona la tarea.")
+            QMessageBox.warning(self.__ventana, "Error", "Primero selecciona la tarea.")
 
     def eliminar_tarea(self):
-        __tarea_vacia = self.ui.tableTareaVacia.currentIndex()
-        __tarea_completada = self.ui.tableTareaCompletada.currentIndex()
+        tarea_vacia = self.__ventana.ui.tableTareaVacia.currentIndex()
+        tarea_completada = self.__ventana.ui.tableTareaCompletada.currentIndex()
 
-        if __tarea_vacia.isValid():
-            self.modelo_tareas.removeRow(__tarea_vacia.row())
-        elif __tarea_completada.isValid():
-            self.modelo_tareas_completadas.removeRow(__tarea_completada.row())
+        if tarea_vacia.isValid():
+            self.__modelo_tareas.removeRow(tarea_vacia.row())
+        elif tarea_completada.isValid():
+            self.__modelo_tareas_completadas.removeRow(tarea_completada.row())
         else:
-            QMessageBox.warning(self, "Error", "Primero selecciona la tarea")
-
+            QMessageBox.warning(self.__ventana, "Error", "Primero selecciona la tarea")
