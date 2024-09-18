@@ -108,4 +108,3 @@ class Ui_Form(object):
         self.boton_completar_tarea.setText(QCoreApplication.translate("Form", u"Marcar como completada", None))
         self.boton_eliminar_tarea.setText(QCoreApplication.translate("Form", u"Eliminar", None))
     # retranslateUi
-
