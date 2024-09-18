@@ -1,2 +1,2 @@
-class tarea:
+class Tarea:
     pass

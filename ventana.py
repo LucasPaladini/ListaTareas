@@ -1,11 +1,10 @@
 from PySide6 import QtCore
 from PySide6.QtWidgets import QWidget, QMessageBox
 from PySide6.QtGui import QStandardItemModel
-from listatareas import Ui_Form
+from ui.ventana_lista_tareas import Ui_Form
 from controlador import ConectarBotones
 
 class Ventana(QWidget):
-
     def __init__(self):
         super().__init__()
         self.__ui = Ui_Form()
